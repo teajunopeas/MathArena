@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://matharena.local/schemas/problem.schema.json",
+  "title": "MathArena Problem",
+  "type": "object",
+  "required": ["id", "statement", "answer", "solution_steps", "topics", "difficulty", "language", "source", "classification", "review_status"],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "statement": { "type": "string", "minLength": 1 },
+    "answer": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "enum": ["numeric", "text", "expression", "choice", "manual"] },
+        "value": {},
+        "tolerance": { "type": "number", "minimum": 0 },
+        "display": { "type": "string" },
+        "choices": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "solution_steps": { "type": "array", "items": { "type": "string" } },
+    "topics": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "difficulty": { "enum": ["introductorio", "intermedio", "avanzado"] },
+    "language": { "type": "string", "minLength": 2 },
+    "source": {
+      "type": "object",
+      "required": ["kind", "reference", "license"],
+      "properties": {
+        "kind": { "enum": ["original", "database", "book", "exam", "user"] },
+        "reference": { "type": "string" },
+        "url": { "type": "string" },
+        "license": { "type": "string" },
+        "accessed_at": { "type": "string", "format": "date" },
+        "attribution": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "classification": {
+      "type": "object",
+      "required": ["status", "method", "confidence"],
+      "properties": {
+        "status": { "enum": ["suggested", "confirmed", "corrected"] },
+        "method": { "type": "string" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "reviewed_by": { "type": "string" },
+        "reviewed_at": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": false
+    },
+    "review_status": { "enum": ["imported", "normalized", "needs_review", "verified", "published"] }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "id": "matharena-demo-integral-001",
+    "statement": "Calculate the definite integral ∫₀¹ x·e^(x²) dx.",
+    "answer": {
+      "type": "numeric",
+      "value": 0.8591409142295225,
+      "tolerance": 0.000001,
+      "display": "(e − 1) / 2"
+    },
+    "solution_steps": [
+      "Use the substitution u = x², so du = 2x dx and x dx = du/2.",
+      "When x = 0, u = 0; when x = 1, u = 1.",
+      "The integral becomes (1/2) ∫₀¹ eᵘ du = (1/2)[eᵘ]₀¹.",
+      "Result: (e − 1) / 2."
+    ],
+    "topics": ["calculus", "integrals", "substitution"],
+    "difficulty": "beginner",
+    "language": "en",
+    "source": {
+      "kind": "original",
+      "reference": "Original sample problem written for the MathArena prototype.",
+      "license": "CC0-1.0"
+    },
+    "classification": {
+      "status": "confirmed",
+      "method": "manual",
+      "confidence": 1.0
+    },
+    "review_status": "verified"
+  }
+]
+
+
