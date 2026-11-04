@@ -1,3 +1,1 @@
-"""
-Module for importing the problems from general databases to structured format.
-"""
+"""Import problems from external databases into a structured format."""

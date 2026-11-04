@@ -1,2 +1,3 @@
-# Probably add the future db to the .gitignore file, for now, nothing needed.
+# Python cache files
+*/__pycache__/*
 

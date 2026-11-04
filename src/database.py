@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 @contextmanager
-def open_database(database_path: Path):
+def _open_database(database_path: Path):
     """
     Open a database connection and close it when the context exits.
 
@@ -15,7 +15,7 @@ def open_database(database_path: Path):
         An SQLite connection with row access and foreign keys configured.
     """
     with closing(sql.connect(database_path)) as connection:
-        connection.row_factory = sqlite.Row
+        connection.row_factory = sql.Row
         connection.execute("PRAGMA foreign_keys = ON")
         with connection:
             yield connection
@@ -24,7 +24,7 @@ def open_database(database_path: Path):
 def initialize_database(database_path: Path):
     """Initialize the database and create its tables if needed."""
 
-    with open_database(database_path) as connection:
+    with _open_database(database_path) as connection:
         # Create the schema if it does not exist.
         connection.executescript(
             """
@@ -99,7 +99,7 @@ def add_problem(
     Returns:
         The ID of the inserted row.
     """
-    with open_database(database_path) as connection:
+    with _open_database(database_path) as connection:
         cursor = connection.cursor()
         cursor.execute(
             """
@@ -125,7 +125,7 @@ def get_problem(
     Returns:
         A dictionary containing the information about the problem, or None if not found.
     """
-    with open_database(database_path) as connection:
+    with _open_database(database_path) as connection:
         cursor = connection.cursor()
         cursor.execute(
             """
@@ -160,7 +160,7 @@ def update_problem(database_path: Path, problem_id: int, changes: dict) -> bool:
     assignments = ", ".join(f"{name} = ?" for name in fields.keys())
     values = list(fields.values()) + [problem_id]
 
-    with open_database(database_path) as connection:
+    with _open_database(database_path) as connection:
         cursor = connection.cursor()
         cursor.execute(
             f"""
@@ -184,7 +184,7 @@ def delete_problem(database_path: Path, problem_id: int) -> bool:
     Returns:
         True if the problem was deleted, False otherwise.
     """
-    with open_database(database_path) as connection:
+    with _open_database(database_path) as connection:
         cursor = connection.cursor()
         cursor.execute(
             """
@@ -206,7 +206,7 @@ def list_problems(database_path: Path, limit = 20) -> list[dict]:
     Returns:
         A list of dictionaries, each containing information about a problem.
     """
-    with open_database(database_path) as connection:
+    with _open_database(database_path) as connection:
         cursor = connection.cursor()
         cursor.execute(
             """
@@ -232,7 +232,7 @@ def add_topic(database_path: Path, name: str, parent_id: int | None = None) -> i
     Returns:
         The ID of the inserted row.
     """
-    with open_database(database_path) as connection:
+    with _open_database(database_path) as connection:
         cursor = connection.cursor()
         cursor.execute(
             """
@@ -251,7 +251,7 @@ def link_problem_to_topic(database_path: Path, problem_id: int, topic_id: int):
         problem_id: The ID of the problem.
         topic_id: The ID of the topic.
     """
-    with open_database(database_path) as connection:
+    with _open_database(database_path) as connection:
 
         cursor = connection.cursor()
         cursor.execute(
@@ -274,7 +274,7 @@ def save_attempt(database_path: Path, problem_id: int, response_text: str, compl
     Returns:
         The ID of the inserted row.
     """
-    with open_database(database_path) as connection:
+    with _open_database(database_path) as connection:
         cursor = connection.cursor()
         cursor.execute(
             """
@@ -295,7 +295,7 @@ def load_attempt(database_path: Path, attempt_id: int) -> dict | None:
     Returns:
         A dictionary containing information about the attempt, or None if not found.
     """
-    with open_database(database_path) as connection:
+    with _open_database(database_path) as connection:
         cursor = connection.cursor()
         cursor.execute(
             """
@@ -318,7 +318,7 @@ def get_attempts(database_path: Path, problem_id: int) -> list[dict]:
     Returns:
         A list of dictionaries, each containing information about an attempt.
     """
-    with open_database(database_path) as connection:
+    with _open_database(database_path) as connection:
         cursor = connection.cursor()
         cursor.execute(
             """
@@ -339,7 +339,7 @@ def delete_attempt(database_path: Path, attempt_id: int) -> bool:
     Returns:
         True if the attempt was deleted, False otherwise.
     """
-    with open_database(database_path) as connection:
+    with _open_database(database_path) as connection:
         cursor = connection.cursor()
         cursor.execute(
             """

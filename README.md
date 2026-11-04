@@ -24,8 +24,9 @@ Python 3 must be available as `py` on Windows. No external packages or internet 
 - `src/`: prototype web interface.
 - `data/problems.json`: problems in JSON format.
 - `schemas/problem.schema.json`: proposed schema for each problem.
-- `docs/PRODUCTO.md`: product proposal and scope.
-- `docs/FLUJO_IMPORTACION.md`: process for adding and classifying sources.
+- `docs/PRODUCT.md`: product proposal and scope.
+- `docs/IMPORT_WORKFLOW.md`: process for adding and classifying sources.
+- `docs/DATABASE.md`: SQLite schema and database function guide.
 - `.vscode/`: workspace task and settings.
 
 ## Current limitations
